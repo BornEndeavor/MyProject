@@ -2,7 +2,7 @@
 
 ### 通过`git`下载安装包
 
-git clone https://github.com/wolf-leo/EasyAdmin8-Laravel
+git clone https://github.com/BornEndeavor/MyProject.git
 
 ### 安装依赖包（确保 PHP 版本 >= 8.2 如需要本地上传则须装 fileinfo 扩展）
 
