@@ -14,7 +14,7 @@ use ReflectionException;
 /**
  * 节点处理类
  * Class Node
- * @package EasyAdmin\auth
+ * @package MyAdmin\auth
  */
 class Node
 {

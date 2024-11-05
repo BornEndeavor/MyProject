@@ -9,6 +9,7 @@ use App\Http\Services\curd\BuildCurd;
 use App\Http\Services\curd\exceptions\FileException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Database\Capsule\Manager as DBManager;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -36,6 +37,32 @@ class CurdGenerateController extends AdminController
         if (!request()->ajax()) return $this->error();
         $type = request()->input('type', '');
         switch ($type) {
+            case 'console':
+                $command = request()->input('command', '');
+                $except_arr = ['update','insert','delete'];
+                foreach ($except_arr as $item){
+                    if(str_contains(strtolower($command), $item)){
+                        return $this->error('参数错误：只支持select操作');
+                    }
+                }
+
+                if (empty($command)) $this->error('请输入命令');
+                $prefix = config('database.connections.mysql.prefix');
+                preg_match('/FROM\s+([^\s.]+)/i', $command, $matches);
+                $table = isset($matches[1]) ? $matches[1] : null;
+
+                $command = $table ? str_replace($table, $prefix.$table , $command) : $command;
+                $where = [];
+                $haswhere = strpos($command,'where ');
+                if($haswhere !== false){
+                    $wheres = substr($command,$haswhere + 6);
+                    $where = $this->parseWhereClause($wheres);
+                }
+                $table = str_replace('system_','',$table);
+                $link = '/' . config('myadmin.ADMIN', 'admin') . '/system.' .$table . '/index';
+
+                return $this->success('查询成功', compact('link','where'));
+                break;
             case "search":
                 $tb_prefix = request()->input('tb_prefix', '');
                 $tb_name   = request()->input('tb_name', '');
@@ -53,7 +80,9 @@ class CurdGenerateController extends AdminController
                             'desc'  => $value->Comment,
                         ];
                     }
-                    return $this->success('查询成功', compact('data', 'list'));
+                    $table = str_replace('system_','',$tb_name);
+                    $link = '/' . config('myadmin.ADMIN', 'admin') . '/system.' .$table . '/index';
+                    return $this->success('查询成功', compact('data','link', 'list'));
                 }catch (\PDOException|\Exception $exception) {
                     return $this->error($exception->getMessage());
                 }
@@ -115,7 +144,7 @@ class CurdGenerateController extends AdminController
                     if (!empty($_file)) {
                         $_fileExp      = explode(DIRECTORY_SEPARATOR, $_file);
                         $_fileExp_last = array_slice($_fileExp, -2);
-                        $link          = '/' . config('easyadmin.ADMIN', 'admin') . '/' . $_fileExp_last[0] . '.' . Str::snake(explode('Controller.php', end($_fileExp_last))[0] ?? '') . '/index';
+                        $link          = '/' . config('myadmin.ADMIN', 'admin') . '/' . $_fileExp_last[0] . '.' . Str::snake(explode('Controller.php', end($_fileExp_last))[0] ?? '') . '/index';
                     }
                     return $this->success('生成成功', compact('result', 'link'));
                 }catch (FileException $exception) {
@@ -137,22 +166,38 @@ class CurdGenerateController extends AdminController
                     return json(['code' => -1, 'msg' => $exception->getMessage(), '__token__' => csrf_token()]);
                 }
                 break;
-            case 'console':
-                $command = request()->input('command', '');
-                if (empty($command)) $this->error('请输入命令');
-                $commandExp = explode(' ', $command);
-                try {
-                    $output = Artisan::call('curd', [...$commandExp]);
-                }catch (\Throwable $exception) {
-                    return $this->error($exception->getMessage() . $exception->getLine());
-                }
-                if (empty($output)) $this->error('设置错误');
-                return $this->success();
-                break;
+
             default:
                 return $this->error('参数错误');
                 break;
         }
+    }
+
+    public function parseWhereClause($where): array
+    {
+        $tokens = preg_split('/\s+AND\s+|OR\s+/i', $where, -1, PREG_SPLIT_NO_EMPTY);
+        $conditions = array();
+
+        foreach ($tokens as $token) {
+            $matches = [];
+            if (preg_match('/^(.+?)\s*=\s*(.+)$/', $token, $matches)) {
+                $conditions[] = [
+                    'field' => trim($matches[1]),
+                    'operator' => '=',
+                    'value' => trim($matches[2]),
+                ];
+            } elseif (preg_match('/^(.+?)\s*IN\s*\((.+)\)$/', $token, $matches)) {
+                $conditions[] = [
+                    'field' => trim($matches[1]),
+                    'operator' => 'IN',
+                    'value' => array_map('trim', explode(',', $matches[2])),
+                ];
+            } else {
+                throw new Exception("Invalid WHERE condition: $token");
+            }
+        }
+
+        return $conditions;
     }
 
 }

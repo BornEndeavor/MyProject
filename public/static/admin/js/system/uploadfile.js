@@ -7,26 +7,17 @@ define(["jquery", "easy-admin"], function ($, ea) {
         add_url: 'system.uploadfile/add',
         edit_url: 'system.uploadfile/edit',
         delete_url: 'system.uploadfile/delete',
-        modify_url: 'system.uploadfile/modify',
         export_url: 'system.uploadfile/export',
+        modify_url: 'system.uploadfile/modify',
     };
 
-    return {
+    return Controller = {
 
         index: function () {
             ea.table.render({
                 init: init,
                 cols: [[
-                    {type: "checkbox"},
-                    {field: 'id', width: 80, title: 'ID', searchOp: '='},
-                    {field: 'upload_type', minWidth: 80, title: '存储位置', search: 'select', selectList: upload_types},
-                    {field: 'url', minWidth: 80, search: false, title: '图片信息', templet: ea.table.image},
-                    {field: 'url', minWidth: 120, title: '保存地址', templet: ea.table.url},
-                    {field: 'original_name', minWidth: 80, title: '文件原名'},
-                    {field: 'mime_type', minWidth: 80, title: 'mime类型'},
-                    {field: 'file_ext', minWidth: 80, title: '文件后缀'},
-                    {field: 'create_time', minWidth: 80, title: '创建时间', search: 'range'},
-                    {width: 250, title: '操作', templet: ea.table.tool, operat: ['delete']}
+                    {type: 'checkbox'},                    {field: 'id', title: 'ID'},                    {field: 'original_name', title: '文件原名'},                    {field: 'url', title: '物理路径'},                    {field: 'image_width', title: '宽度'},                    {field: 'image_height', title: '高度'},                    {field: 'image_type', title: '图片类型'},                    {field: 'image_frames', title: '图片帧数'},                    {field: 'mime_type', title: 'mime类型'},                    {field: 'file_size', title: '文件大小'},                    {field: 'sha1', title: '文件 sha1编码'},                    {field: 'create_time', title: '创建日期'},                    {field: 'update_time', title: '更新时间'},                    {field: 'upload_time', title: '上传时间'},                    {width: 250, title: '操作', templet: ea.table.tool},
                 ]],
             });
 
@@ -39,4 +30,5 @@ define(["jquery", "easy-admin"], function ($, ea) {
             ea.listen();
         },
     };
+
 });

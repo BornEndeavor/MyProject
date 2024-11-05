@@ -3,24 +3,23 @@
 namespace App\Http\Controllers\admin\system;
 
 use App\Http\Controllers\common\AdminController;
-use App\Models\SystemUploadfile;
-use Illuminate\Http\JsonResponse;
-use Illuminate\View\View;
 use App\Http\Services\annotation\NodeAnnotation;
 use App\Http\Services\annotation\ControllerAnnotation;
 
 /**
- * @ControllerAnnotation(title="上传文件管理")
+ * @ControllerAnnotation(title="system_uploadfile")
  */
 class UploadfileController extends AdminController
 {
 
+    private array $notes;
+
     public function initialize()
     {
         parent::initialize();
-        $this->model  = new SystemUploadfile();
-        $upload_types = config('admin.upload_types');
-        $this->assign(compact('upload_types'));
+        $this->model = new \App\Models\SystemUploadfile();
+        $this->notes = $notes = $this->model->notes;
+        $this->assign(compact('notes'));
     }
 
 }

@@ -55,7 +55,7 @@ class LogController extends AdminController
      */
     public function export(): View|bool
     {
-        if (config('easyadmin.IS_DEMO', false)) {
+        if (config('myadmin.IS_DEMO', false)) {
             return $this->error('演示环境下不允许操作');
         }
         [$page, $limit, $where, $excludeFields] = $this->buildTableParams(['month']);
@@ -88,7 +88,7 @@ class LogController extends AdminController
     }
 
     /**
-     * @NodeAnnotation(title="框架日志")
+     * @NodeAnnotation(title="日志")
      */
     public function record()
     {

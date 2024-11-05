@@ -293,7 +293,7 @@ define(["jquery", "tableSelect"], function ($, tableSelect) {
                         }
                     } else if (v === 'export') {
                         if (admin.checkAuth('export', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success easyadmin-export-btn" data-url="' + init.export_url + '" data-table-export="' + tableId + '"><i class="fa fa-file-excel-o"></i> 导出</button>\n';
+                            toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success myadmin-export-btn" data-url="' + init.export_url + '" data-table-export="' + tableId + '"><i class="fa fa-file-excel-o"></i> 导出</button>\n';
                         }
                     } else if (typeof v === "object") {
                         $.each(v, function (ii, vv) {

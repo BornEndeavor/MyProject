@@ -18,7 +18,7 @@ define(["jquery", "easy-admin", "miniTab"], function ($, ea, miniTab) {
 <fieldset class="layui-elem-field">
   <legend>提示</legend>
   <div class="layui-field-box">
-  <p><a class="layui-font-blue" target="_blank" rel="nofollow" href="https://edocs.easyadmin8.top/curd/command.html">命令可查询文档</a></p>
+  <p><a class="layui-font-blue" target="_blank" rel="nofollow" href="https://edocs.myadmin.top/curd/command.html">命令可查询文档</a></p>
   </div>
 </fieldset>
 <form class="layui-form layui-form-pane" action="">
@@ -70,54 +70,34 @@ define(["jquery", "easy-admin", "miniTab"], function ($, ea, miniTab) {
             let createStatus = false
             let tb_prefix
             let tb_name
+
             form.on('submit(search)', function (data) {
                 let field = data.field
                 tb_prefix = field.tb_prefix
                 tb_name = field.tb_name
+
                 ea.request.get({url: $(this).attr('lay-submit'), prefix: true, data: field}, function (res) {
                     createStatus = true
-                    $('.tableShow').removeClass('layui-hide')
                     $('.table-text').text(field.tb_prefix + field.tb_name)
-                    let _data = res.data
-
-                    let fieldsHtml = ``
-                    $.each(_data.list, function (i, v) {
-                        if (v.Key != 'PRI') fieldsHtml += `
-<div class="input_tag">
-<input lay-skin="tag" class="checkbox_${v.Field}" type="checkbox"
-title="${v.Field} (${v.Type})" value="${v.Field}" lay-filter="checkbox-filter" />
-</div>
-`
+                    let link = res.data.link
+                    let query_str = ''
+                    res.data.where.map((item)=>{
+                        query_str = query_str === '' ? '?' + item.field + '=' + item.value : query_str + '&' + item.field + '=' + item.value
                     })
-                    $('.table_fields').html(fieldsHtml)
-                    form.render('checkbox')
 
-                    form.on('checkbox(checkbox-filter)', function (data) {
-                        let _checked = data.elem.checked
-                        $.each($(`.checkbox_${data.value}`), function (i, v) {
-                            if (i > 0) $(this).prop('checked', false);
-                        })
-                        $(data.elem).prop('checked', _checked);
-                    });
+                    let html = ''
+                    html += '<a layuimini-content-href="' + link + query_str + '" data-title="查询结果页">' +
+                        '<button class="layui-btn"><i class="layui-icon layui-icon-link"></i> 自动生成页面预览</button>' +
+                        '</a>'
+                    $('.file-list').html(html)
+                    $('.file-list button').click()
 
-                    table.render({
-                        elem: '#currentTable', cols: [
-                            [
-                                {field: 'name', title: '字段', minWidth: 80},
-                                {field: 'type', title: '类型', minWidth: 80},
-                                {field: 'key', title: '键', minWidth: 80},
-                                {field: 'extra', title: '是否自增', minWidth: 80},
-                                {field: 'null', title: '是否为空', minWidth: 80},
-                                {field: 'desc', title: '描述', minWidth: 80},
-                            ]
-                        ], data: _data.data, page: false,
-                    });
                 }, function (error) {
                     createStatus = false
                     ea.msg.error(error.msg)
-                    $('.tableShow').addClass('layui-hide')
                     return
                 })
+
                 form.on('submit(add)', function (data) {
                     let table = $('.table-text').text()
                     if (!table || !createStatus) {
@@ -198,7 +178,7 @@ title="${v.Field} (${v.Type})" value="${v.Field}" lay-filter="checkbox-filter" /
                 $.each(array, function (idx, item) {
                     html += '<li class="layui-form-item">' + item + '</li>'
                 })
-                html += '<a layuimini-content-href="' + link + '" data-title="页面预览">' +
+                html += '<a layuimini-content-href="' + link + '" data-title="查询结果页">' +
                     '<button class="layui-btn"><i class="layui-icon layui-icon-link"></i> 自动生成页面预览</button>' +
                     '</a>'
                 $('.file-list').html(html)

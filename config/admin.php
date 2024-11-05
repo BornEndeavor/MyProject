@@ -7,7 +7,7 @@ return [
     'super_admin_id'       => 1,
 
     // 后台别名 默认后台访问路径
-    'admin_alias_name'     => config('easyadmin.ADMIN', env('EASYADMIN.ADMIN', 'admin')),
+    'admin_alias_name'     => config('myadmin.ADMIN', env('MYADMIN.ADMIN', 'admin')),
 
     // 不需要验证登录的控制器
     'no_login_controller'  => [

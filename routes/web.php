@@ -17,13 +17,9 @@ use Illuminate\Support\Str;
 
 // 系统首页
 Route::get('/', function () {
-    return redirect('/' . config('easyadmin.ADMIN'));
+    return redirect('/' . config('myadmin.ADMIN'));
 })->middleware([\App\Http\Middleware\CheckInstall::class]);
 
-// 首次安装管理系统
-Route::controller(\App\Http\Controllers\common\InstallController::class)->group(function () {
-    Route::match(['get', 'post'], '/install', 'index');
-});
 
 // 后台所有路由
 $admin = config('admin.admin_alias_name');

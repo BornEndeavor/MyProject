@@ -14,6 +14,13 @@
     <link rel="stylesheet" href="/static/admin/css/public.css?v={{$version}}" media="all">
     <link rel="stylesheet" href="" id="layuicss-theme-dark" media="all">
     <script>
+        let url = window.location.href
+        const searchParams = new URLSearchParams(url.split("?")[1])
+        const queryParams = {};
+        for (const [key, value] of searchParams.entries()) {
+            queryParams[key] = value;
+        }
+
         window.CONFIG = {
             ADMIN: "{{$adminModuleName}}",
             CONTROLLER_JS_PATH: "{{$thisControllerJsPath}}",
@@ -24,6 +31,7 @@
             CSRF_TOKEN: '{{ csrf_token() }}',
             ADMIN_UPLOAD_URL: "{{$adminUploadUrl}}",
             EDITOR_TYPE: "{{sysconfig('site','editor_type')?:'ueditor'}}",
+
         };
     </script>
     <script src="/static/plugs/xmSelect/xm-select.js" charset="utf-8"></script>

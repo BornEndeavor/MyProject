@@ -10,17 +10,16 @@
 
             <div class="layuimini-header-content">
                 <a>
-                    <div class="layuimini-tool"><i title="展开" class="fa fa-outdent" data-side-fold="1"></i></div>
+                    <div class="layuimini-tool"><i title="Expan" class="fa fa-outdent" data-side-fold="1"></i></div>
                 </a>
 
-                <!--电脑端头部菜单-->
+
                 <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-menu-header-pc layuimini-pc-show">
                 </ul>
 
-                <!--手机端头部菜单-->
                 <ul class="layui-nav layui-layout-left layuimini-header-menu layuimini-mobile-show">
                     <li class="layui-nav-item">
-                        <a href="javascript:;"><i class="fa fa-list-ul"></i> 选择模块</a>
+                        <a href="javascript:;"><i class="fa fa-list-ul"></i> Select Module</a>
                         <dl class="layui-nav-child layuimini-menu-header-mobile">
                         </dl>
                     </li>
@@ -37,16 +36,10 @@
                     <!--                        </div>-->
                     <!--                    </li>-->
                     <li class="layui-nav-item" lay-unselect>
-                        <a href="http://easyadmin8.top" target="_blank"><i class="fa fa-home"></i></a>
+                        <a href="javascript:;" data-refresh="Refresh"><i class="fa fa-refresh"></i></a>
                     </li>
                     <li class="layui-nav-item" lay-unselect>
-                        <a href="javascript:;" data-refresh="刷新"><i class="fa fa-refresh"></i></a>
-                    </li>
-                    <li class="layui-nav-item" lay-unselect>
-                        <a href="javascript:;" data-clear="清理" class="layuimini-clear"><i class="fa fa-trash-o"></i></a>
-                    </li>
-                    <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
-                        <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
+                        <a href="javascript:;" data-clear="Clear" class="layuimini-clear"><i class="fa fa-trash-o"></i></a>
                     </li>
                     <li class="layui-nav-item layuimini-setting">
                         <a href="javascript:;">
@@ -56,16 +49,16 @@
                         </a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="javascript:;" layuimini-content-href="{{__url('index/editAdmin')}}" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
+                                <a href="javascript:;" layuimini-content-href="{{__url('index/editAdmin')}}" data-title="基本资料" data-icon="fa fa-gears">Basic Info<span class="layui-badge-dot"></span></a>
                             </dd>
                             <dd>
-                                <a href="javascript:;" layuimini-content-href="{{__url('index/editPassword')}}" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
+                                <a href="javascript:;" layuimini-content-href="{{__url('index/editPassword')}}" data-title="修改密码" data-icon="fa fa-gears">Modify Password</a>
                             </dd>
                             <dd>
                                 <hr>
                             </dd>
                             <dd>
-                                <a href="javascript:;" class="login-out">退出登录</a>
+                                <a href="javascript:;" class="login-out">Logout</a>
                             </dd>
                         </dl>
                     </li>

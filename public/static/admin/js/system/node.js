@@ -15,6 +15,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         index: function () {
             ea.table.render({
                 init: init,
+                url : '/admin/system.node/index?filter=' + JSON.stringify(queryParams),
                 search: false,
                 page: false,
                 toolbar: ['refresh',

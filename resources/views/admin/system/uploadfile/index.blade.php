@@ -9,8 +9,9 @@
         </table>
     </div>
 </div>
+
 <script>
-    let upload_types = '{!! json_encode($upload_types) !!}';
-    upload_types = JSON.parse(upload_types)
+    let notes = JSON.parse('{!! json_encode($notes,256) !!}');
 </script>
+
 @include('admin.layout.foot')

@@ -60,7 +60,7 @@ class AdminController extends Controller
     {
         $parameters           = request()->route()->parameters ?? [];
         $this->adminConfig    = $adminConfig = config('admin');
-        $this->isDemo         = config('easyadmin.IS_DEMO', false);
+        $this->isDemo         = config('myadmin.IS_DEMO', false);
         $secondary            = $parameters['secondary'] ?? '';
         $controller           = $parameters['controller'] ?? 'index';
         $action               = $parameters['action'] ?? 'index';

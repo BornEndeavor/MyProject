@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 /**
  * 快速构建系统CURD
  * Class BuildCurd
- * @package EasyAdmin\curd
+ * @package MyAdmin\curd
  */
 class BuildCurd
 {

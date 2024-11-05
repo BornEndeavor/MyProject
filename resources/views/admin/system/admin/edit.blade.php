@@ -1,50 +1,61 @@
 @include('admin.layout.head')
 <div class="layuimini-container">
     <form id="app-form" class="layui-form layuimini-form">
-
+        
         <div class="layui-form-item">
-            <label class="layui-form-label required">用户头像</label>
-            <div class="layui-input-block layuimini-upload">
-                <input name="head_img" class="layui-input layui-col-xs6" lay-verify="required" lay-reqtext="请上传用户头像" placeholder="请上传用户头像" value="{{$row['head_img']??''}}">
-                <div class="layuimini-upload-btn">
-                    <span><a class="layui-btn" data-upload="head_img" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg"><i class="fa fa-upload"></i> 上传</a></span>
-                    <span><a class="layui-btn layui-btn-normal" id="select_head_img" data-upload-select="head_img" data-upload-number="one"><i class="fa fa-list"></i> 选择</a></span>
-                </div>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label required">登录账户</label>
+            <label class="layui-form-label">角色权限ID</label>
             <div class="layui-input-block">
-                <input type="text" name="username" class="layui-input" readonly value="{{$row['username']??''}}">
-                <tip>填写登录账户。</tip>
+                <input type="text" name="auth_ids" class="layui-input"  placeholder="请输入角色权限ID" value="{{$row['auth_ids']}}">
             </div>
         </div>
-
         <div class="layui-form-item">
-            <label class="layui-form-label">用户手机</label>
+            <label class="layui-form-label">头像</label>
             <div class="layui-input-block">
-                <input type="text" name="phone" class="layui-input" lay-reqtext="请输入用户手机" placeholder="请输入用户手机" value="{{$row['phone']??''}}">
-                <tip>填写用户手机。</tip>
+                <input type="text" name="head_img" class="layui-input"  placeholder="请输入头像" value="{{$row['head_img']}}">
             </div>
         </div>
-
         <div class="layui-form-item">
-            <label class="layui-form-label">角色权限</label>
+            <label class="layui-form-label">用户登录名</label>
             <div class="layui-input-block">
-                @foreach($auth_list as $key=>$val)
-                    <input type="checkbox" name="auth_ids[{{$key}}]" lay-skin="primary" title="{{$val}}" @if(in_array($key,$row['auth_ids']??[]))checked=""@endif>
-                @endforeach
+                <input type="text" name="username" class="layui-input" lay-verify="required" placeholder="请输入用户登录名" value="{{$row['username']}}">
             </div>
         </div>
-
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户登录密码</label>
+            <div class="layui-input-block">
+                <input type="text" name="password" class="layui-input" lay-verify="required" placeholder="请输入用户登录密码" value="{{$row['password']}}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系手机号</label>
+            <div class="layui-input-block">
+                <input type="text" name="phone" class="layui-input"  placeholder="请输入联系手机号" value="{{$row['phone']}}">
+            </div>
+        </div>
         <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">备注信息</label>
+            <label class="layui-form-label">备注说明</label>
             <div class="layui-input-block">
-                <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息">{{$row['remark']??''}}</textarea>
+                <textarea name="remark" class="layui-textarea"  placeholder="请输入备注说明">{{$row['remark']}}</textarea>
             </div>
         </div>
-
+        <div class="layui-form-item">
+            <label class="layui-form-label">登录次数</label>
+            <div class="layui-input-block">
+                <input type="text" name="login_num" class="layui-input"  placeholder="请输入登录次数" value="{{$row['login_num']}}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序</label>
+            <div class="layui-input-block">
+                <input type="text" name="sort" class="layui-input"  placeholder="请输入排序" value="{{$row['sort']}}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态(0:禁用,1:启用,)</label>
+            <div class="layui-input-block">
+                <input type="text" name="status" class="layui-input" lay-verify="required" placeholder="请输入状态(0:禁用,1:启用,)" value="{{$row['status']}}">
+            </div>
+        </div>
         <div class="hr-line"></div>
         <div class="layui-form-item text-center">
             <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit>确认</button>
